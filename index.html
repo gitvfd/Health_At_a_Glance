@@ -456,7 +456,7 @@ function highlightCountry(codeISO){
 
 var e = document.getElementById("dropDownButton");
 
-if(getCookie("ISO")==undefined){
+if(getCookie("ISO")=="" ){
 	highlightCountry(e.options[e.selectedIndex].value);
 }
 else{
