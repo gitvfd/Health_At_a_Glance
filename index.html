@@ -16,10 +16,12 @@
 <div class="button  " id="resources">Health care resources </div>
 </div>
 <Br/>
-<div class="topicExplanation">Rogatus ad ultimum admissusque in consistorium ambage nulla praegressa inconsiderate et leviter proficiscere inquit ut praeceptum est, Caesar sciens quod si cessaveris, et tuas et palatii tui auferri iubebo prope diem annonas. hocque solo contumaciter dicto subiratus abscessit nec in conspectum eius postea venit saepius arcessitus.</div>
+<div class="topicExplanation">Life expectancy is a key indicator to understanding the overall health of a population. Three indicators reflecting gender and age-specific life expectancies are presented here. More specific indicators on ischaemic heart mortality and dementia prevalence are also shown, two major causes of mortality and morbidity today and in the future.<br/>All data refer to 2015 or nearest year, except for dementia prevalence, which refers to 2017.
+</div>
 <Br/>
 <div class="selector">Highlight a country: 
 <select id="dropDownButton" onchange="highlightCountry(this.value)";>
+	 <option value="-">-</option>
 	 <option value="AUS" selected="selected">Australia</option>
 	 <option value="AUT" >Austria</option>
 	 <option value="BEL" >Belgium</option>
@@ -69,27 +71,27 @@
 <br/>
 <div class="sector" id="HealthStatus">
 	<div class="compareChart">
-		<div class="metadata" tooltip="Rogatus ad ultimum admissusque in consistorium ambage nulla praegressa inconsiderate et leviter proficiscere inquit ut praeceptum est, Caesar sciens quod si cessaveris, et tuas et palatii tui auferri iubebo prope diem annonas. hocque solo contumaciter dicto subiratus abscessit nec in conspectum eius postea venit saepius arcessitus.">Male life expectancy
+		<div class="metadata" tooltip="Years of life at birth - 2015 or nearest year">Life expectancy (male)
 		</div>
 		<span id="MLifeExp"></span>
 	</div>
 	<div class="compareChart" >
-		<div class="metadata" tooltip="Rogatus ad ultimum admissusque in consistorium ambage nulla praegressa inconsiderate et leviter proficiscere inquit ut praeceptum est, Caesar sciens quod si cessaveris, et tuas et palatii tui auferri iubebo prope diem annonas. hocque solo contumaciter dicto subiratus abscessit nec in conspectum eius postea venit saepius arcessitus.">Female life expectancy
+		<div class="metadata" tooltip="Years of life at birth - 2015 or nearest year">Life expectancy (female)
 		</div>
 		<span id="FLifeExp"></span>
 	</div>
 	<div class="compareChart" >
-		<div class="metadata" tooltip="Rogatus ad ultimum admissusque in consistorium ambage nulla praegressa inconsiderate et leviter proficiscere inquit ut praeceptum est, Caesar sciens quod si cessaveris, et tuas et palatii tui auferri iubebo prope diem annonas. hocque solo contumaciter dicto subiratus abscessit nec in conspectum eius postea venit saepius arcessitus.">Life expectancy over 65
+		<div class="metadata" tooltip="Years of life - 2015 or nearest year">Life expectancy at age 65
 		</div>
 		<span id="LifeExp65"></span>
 	</div>
 	<div class="compareChart" >
-		<div class="metadata" tooltip="Rogatus ad ultimum admissusque in consistorium ambage nulla praegressa inconsiderate et leviter proficiscere inquit ut praeceptum est, Caesar sciens quod si cessaveris, et tuas et palatii tui auferri iubebo prope diem annonas. hocque solo contumaciter dicto subiratus abscessit nec in conspectum eius postea venit saepius arcessitus.">Ischaemic mortality
+		<div class="metadata" tooltip="Age-standardised rate per 100 000 population - 2015 or nearest year">Ischaemic mortality
 		</div>
 		<span id="ischaemic"></span>
 	</div>
 	<div class="compareChart" >
-		<div class="metadata" tooltip="Rogatus ad ultimum admissusque in consistorium ambage nulla praegressa inconsiderate et leviter proficiscere inquit ut praeceptum est, Caesar sciens quod si cessaveris, et tuas et palatii tui auferri iubebo prope diem annonas. hocque solo contumaciter dicto subiratus abscessit nec in conspectum eius postea venit saepius arcessitus.">Dementia prevalence
+		<div class="metadata" tooltip="Cases per 1 000 population - 2017">Dementia prevalence
 		</div>
 		<span id="dementia"></span>
 	</div>
@@ -210,7 +212,7 @@ test="#"+topicSelected;
 		var minValue = d3.min(data, function(d) { return parseFloat(d.value); });
 		var maxValue = d3.max(data, function(d) { return parseFloat(d.value); });
 
-		if(topicSelected=="LifeExp65" || topicSelected=="MLifeExp" || topicSelected=="FLifeExp" || topicSelected=="ischaemic" || topicSelected=="dementia")
+		if(topicSelected=="LifeExp65" || topicSelected=="MLifeExp" || topicSelected=="FLifeExp")
 			x.domain([minValue,maxValue]) ;
 		else
 			x.domain([maxValue,minValue]) ;
@@ -249,7 +251,7 @@ test="#"+topicSelected;
 			})
 			.style("fill",function(d){
 				if(d.ISO==countrySel)
-					return "#5E0084"
+					return "#76A02D"
 				else if (d.Country=="OECD")
 					return "#0082B5"
 				else if (d.value==minValue )
@@ -266,10 +268,22 @@ test="#"+topicSelected;
 		circleGroup.append("text")
 			.attr("class","label")
 			.attr("dx", function(d){
-				    	if(d.value!=="")
-				    		return  x(parseFloat(d.value))-12;})
+				if(d.value!==""){
+					if(topicSelected=="LifeExp65" || topicSelected=="MLifeExp" || topicSelected=="FLifeExp")
+				    		return  x(parseFloat(d.value))-12;
+					else
+							return  12 + x(parseFloat(d.value));
+				 }  	
+			})
 			.attr("dy",height/2)
-			.style("text-anchor","end")
+			.style("text-anchor",function(d){
+
+					if(topicSelected=="LifeExp65" || topicSelected=="MLifeExp" || topicSelected=="FLifeExp")
+				    		return  "end";
+					else
+							return  "start";
+				  	
+			})
 			.text(function(d){
 				if((d.value==minValue  )&& (d.ISO!=countrySel))
 					return format(d.value) ;
@@ -278,10 +292,22 @@ test="#"+topicSelected;
 		circleGroup.append("text")
 			.attr("class","label")
 			.attr("dx", function(d){
-				    	if(d.value!=="")
-				    		return  12 + x(parseFloat(d.value));})
+				if(d.value!==""){
+					if(topicSelected=="LifeExp65" || topicSelected=="MLifeExp" || topicSelected=="FLifeExp")
+				    		return  12 + x(parseFloat(d.value));
+					else
+							return  x(parseFloat(d.value))-12;
+				 }  	
+			})
 			.attr("dy",height/2)
-			.style("text-anchor","start")
+			.style("text-anchor",function(d){
+
+					if(topicSelected=="LifeExp65" || topicSelected=="MLifeExp" || topicSelected=="FLifeExp")
+				    		return  "start";
+					else
+							return  "end";
+				  	
+			})
 			.text(function(d){
 				if(( d.value==maxValue )&& (d.ISO!=countrySel))
 					return format(d.value) ;
@@ -339,27 +365,27 @@ test="#"+topicSelected;
 		     d3.select("#indicTooltip")
 		        .text(function(){
 	            	if (topicSelected=="LifeExp65")
-	            		return "Life expectancy for over 65 (" + d.yearData +")";
+	            		return "Life expectancy at age 65";
 	            	if (topicSelected=="MLifeExp")
-	            		return "Male life expectancy (" + d.yearData  +")";
+	            		return "Life expectancy (male)";
 	            	if (topicSelected=="FLifeExp")
-	            		return "Female life expectancy (" + d.yearData  +")";
+	            		return "Life expectancy (female)";
 	            	if (topicSelected=="ischaemic")
-	            		return "Ischaemic mortality rate (" + d.yearData  +")";
+	            		return "Ischaemic mortality";
 	            	if (topicSelected=="dementia")
-	            		return "Dementia prevalence rate (" + d.yearData  +")" ;
+	            		return "Dementia prevalence" ;
 	            });
 
 		     d3.select("#valueTooltip")
 		        .text(function(){
 			        if (topicSelected=="MLifeExp" || topicSelected=="FLifeExp")
-		              return  format(d.value) + " Year of life at birth";
+		              return  format(d.value) + " Years of life at birth";
 		            else if((topicSelected=="LifeExp65" ) )
-						return format(d.value) + " Years of life at age 65";
+						return format(d.value) + " Years of life";
 		            else if((topicSelected=="ischaemic" ) )
-						return format(d.value) + " per 100 000";
+						return format(d.value) + " Age-standardised rate per 100 000 population";
 		            else if((topicSelected=="dementia" ))
-						return format(d.value) + " cases per 1000";
+						return format(d.value) + " Cases per 1 000 population";
         	});
 
 
