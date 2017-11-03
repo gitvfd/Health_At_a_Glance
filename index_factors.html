@@ -16,10 +16,12 @@
 <div class="button  " id="resources">Health care resources </div>
 </div>
 <Br/>
-<div class="topicExplanation">Rogatus ad ultimum admissusque in consistorium ambage nulla praegressa inconsiderate et leviter proficiscere inquit ut praeceptum est, Caesar sciens quod si cessaveris, et tuas et palatii tui auferri iubebo prope diem annonas. hocque solo contumaciter dicto subiratus abscessit nec in conspectum eius postea venit saepius arcessitus.</div>
+<div class="topicExplanation">Smoking, alcohol consumption and obesity are three major risk factors for noncommunicable diseases. Population exposure to air pollution is also a critical non-medical determinant of health.<br/>All data refer to 2015 or nearest year.
+</div>
 <Br/>
 <div class="selector">Highlight a country: 
 <select id="dropDownButton" onchange="highlightCountry(this.value)";>
+	 <option value="-">-</option>
 	 <option value="AUS" selected="selected">Australia</option>
 	 <option value="AUT" >Austria</option>
 	 <option value="BEL" >Belgium</option>
@@ -70,22 +72,22 @@
 <br/>
 <div class="sector" id="RiskFactors">
 	<div class="compareChart">
-		<div class="metadata" tooltip="Rogatus ad ultimum admissusque in consistorium ambage nulla praegressa inconsiderate et leviter proficiscere inquit ut praeceptum est, Caesar sciens quod si cessaveris, et tuas et palatii tui auferri iubebo prope diem annonas. hocque solo contumaciter dicto subiratus abscessit nec in conspectum eius postea venit saepius arcessitus.">Smoking
+		<div class="metadata" tooltip="% of population (15 years+) who smokes daily - 2015 or nearest year">Daily smoking
 		</div>
 		<span id="smoking"></span>
 	</div>
 	<div class="compareChart" >
-		<div class="metadata" tooltip="Rogatus ad ultimum admissusque in consistorium ambage nulla praegressa inconsiderate et leviter proficiscere inquit ut praeceptum est, Caesar sciens quod si cessaveris, et tuas et palatii tui auferri iubebo prope diem annonas. hocque solo contumaciter dicto subiratus abscessit nec in conspectum eius postea venit saepius arcessitus.">Alcohol
+		<div class="metadata" tooltip="Liters per capita (15 years+) consumed in a year - 2015 or nearest year">Alcohol consumption
 		</div>
 		<span id="alcohol"></span>
 	</div>
 	<div class="compareChart" >
-		<div class="metadata" tooltip="Rogatus ad ultimum admissusque in consistorium ambage nulla praegressa inconsiderate et leviter proficiscere inquit ut praeceptum est, Caesar sciens quod si cessaveris, et tuas et palatii tui auferri iubebo prope diem annonas. hocque solo contumaciter dicto subiratus abscessit nec in conspectum eius postea venit saepius arcessitus.">Obesity
+		<div class="% of population (15 years+) with BMI>30 - 2015 or nearest year">Obesity
 		</div>
 		<span id="obesity"></span>
 	</div>
 	<div class="compareChart" >
-		<div class="metadata" tooltip="Rogatus ad ultimum admissusque in consistorium ambage nulla praegressa inconsiderate et leviter proficiscere inquit ut praeceptum est, Caesar sciens quod si cessaveris, et tuas et palatii tui auferri iubebo prope diem annonas. hocque solo contumaciter dicto subiratus abscessit nec in conspectum eius postea venit saepius arcessitus.">Air pollution
+		<div class="metadata" tooltip="Mean annual population exposure to PM2.5, µg/m3 - 2015 or nearest year">Air pollution
 		</div>
 		<span id="airpol"></span>
 	</div>
@@ -205,7 +207,7 @@ test="#"+topicSelected;
 		var minValue = d3.min(data, function(d) { return parseFloat(d.value); });
 		var maxValue = d3.max(data, function(d) { return parseFloat(d.value); });
 
-		if(topicSelected=="smoking" ||  topicSelected=="alcohol" ||  topicSelected=="obesity" ||  topicSelected=="airpol" )
+		if(topicSelected=="")
 			x.domain([minValue,maxValue]) ;
 		else
 			x.domain([maxValue,minValue]) ;
@@ -244,7 +246,7 @@ test="#"+topicSelected;
 			})
 			.style("fill",function(d){
 				if(d.ISO==countrySel)
-					return "#5E0084"
+					return "#76A02D"
 				else if (d.Country=="OECD")
 					return "#0082B5"
 				else if (d.value==minValue )
@@ -260,10 +262,22 @@ test="#"+topicSelected;
 		circleGroup.append("text")
 			.attr("class","label")
 			.attr("dx", function(d){
-				    	if(d.value!=="")
-				    		return  x(parseFloat(d.value))-12;})
+				if(d.value!==""){
+					if(topicSelected=="")
+				    		return  x(parseFloat(d.value))-12;
+					else
+							return  12 + x(parseFloat(d.value));
+				 }  	
+			})
 			.attr("dy",height/2)
-			.style("text-anchor","end")
+			.style("text-anchor",function(d){
+
+					if(topicSelected=="")
+				    		return  "end";
+					else
+							return  "start";
+				  	
+			})
 			.text(function(d){
 				if((d.value==minValue  )&& (d.ISO!=countrySel))
 					return format(d.value) ;
@@ -272,10 +286,22 @@ test="#"+topicSelected;
 		circleGroup.append("text")
 			.attr("class","label")
 			.attr("dx", function(d){
-				    	if(d.value!=="")
-				    		return  12 + x(parseFloat(d.value));})
+				if(d.value!==""){
+					if(topicSelected=="")
+				    		return  12 + x(parseFloat(d.value));
+					else
+							return  x(parseFloat(d.value))-12;
+				 }  	
+			})
 			.attr("dy",height/2)
-			.style("text-anchor","start")
+			.style("text-anchor",function(d){
+
+					if(topicSelected=="")
+				    		return  "start";
+					else
+							return  "end";
+				  	
+			})
 			.text(function(d){
 				if(( d.value==maxValue )&& (d.ISO!=countrySel))
 					return format(d.value) ;
@@ -333,25 +359,25 @@ test="#"+topicSelected;
 		     d3.select("#indicTooltip")
 		        .text(function(){
 	            	if (topicSelected=="smoking")
-	            		return "Smoking (" + d.yearData +")";
+	            		return "Daily smoking";
 	            	if (topicSelected=="alcohol")
-	            		return "Alcohol (" + d.yearData  +")";
+	            		return "Alcohol consumption";
 	            	if (topicSelected=="obesity")
-	            		return "Obesity (" + d.yearData  +")";
+	            		return "Obesity";
 	            	if (topicSelected=="airpol")
-	            		return " Air pollution  (" + d.yearData  +")";
+	            		return " Air pollution ";
 	            });
 
 		     d3.select("#valueTooltip")
 		        .text(function(){
 			        if (topicSelected=="smoking" )
-		              return  format(d.value) + " % of population who smokes daily";
+		              return  format(d.value) + " % of population (15 years+) who smokes daily";
 		            else if((topicSelected=="obesity" ) )
-						return format(d.value) + " % of population with BMI >30";
+						return format(d.value) + " % of population (15 years+) with BMI>30";
 		            else if((topicSelected=="alcohol" ) )
-						return format(d.value) + " liter per capita consumed in a year";
+						return format(d.value) + " Liters per capita (15 years+) consumed in a year";
 		            else if((topicSelected=="airpol" ))
-						return format(d.value) + " mg/m3 (Mean annual exposure to PM2.5)";
+						return format(d.value) + " Mean annual population exposure to PM2.5, µg/m3";
         	});
 
 

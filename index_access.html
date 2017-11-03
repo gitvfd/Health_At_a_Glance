@@ -16,10 +16,12 @@
 <div class="button  " id="resources">Health care resources </div>
 </div>
 <Br/>
-<div class="topicExplanation">Rogatus ad ultimum admissusque in consistorium ambage nulla praegressa inconsiderate et leviter proficiscere inquit ut praeceptum est, Caesar sciens quod si cessaveris, et tuas et palatii tui auferri iubebo prope diem annonas. hocque solo contumaciter dicto subiratus abscessit nec in conspectum eius postea venit saepius arcessitus.</div>
+<div class="topicExplanation">Access to care is a critical measure of health system performance. Indicators presented here include population coverage, an overall measure of health care coverage, alongside indicators reflecting financial and timely access.<br/>Data on population coverage, share of OOP and waiting times refer to 2015 or nearest year; consultations skipped due to cost refer to 2016 or nearest year.
+</div>
 <Br/>
 <div class="selector">Highlight a country: 
 <select id="dropDownButton" onchange="highlightCountry(this.value)";>
+	 <option value="-">-</option>
 	 <option value="AUS" selected="selected">Australia</option>
 	 <option value="AUT" >Austria</option>
 	 <option value="BEL" >Belgium</option>
@@ -70,22 +72,22 @@
 <br/>
 <div class="sector" id="AccessCare">
 	<div class="compareChart">
-		<div class="metadata" tooltip="Rogatus ad ultimum admissusque in consistorium ambage nulla praegressa inconsiderate et leviter proficiscere inquit ut praeceptum est, Caesar sciens quod si cessaveris, et tuas et palatii tui auferri iubebo prope diem annonas. hocque solo contumaciter dicto subiratus abscessit nec in conspectum eius postea venit saepius arcessitus.">Population coverage
+		<div class="metadata" tooltip="% of population covered by insurance for a core set of services - 2015 or nearest year">Population coverage
 		</div>
 		<span id="popcover"></span>
 	</div>
 	<div class="compareChart" >
-		<div class="metadata" tooltip="Rogatus ad ultimum admissusque in consistorium ambage nulla praegressa inconsiderate et leviter proficiscere inquit ut praeceptum est, Caesar sciens quod si cessaveris, et tuas et palatii tui auferri iubebo prope diem annonas. hocque solo contumaciter dicto subiratus abscessit nec in conspectum eius postea venit saepius arcessitus.">Out-of-pocket expenditure
+		<div class="metadata" tooltip="% of medical expenses on final household consumption  - 2015 or nearest year">Share of out-of-pocket expenditure
 		</div>
 		<span id="oopexp"></span>
 	</div>
 	<div class="compareChart" >
-		<div class="metadata" tooltip="Rogatus ad ultimum admissusque in consistorium ambage nulla praegressa inconsiderate et leviter proficiscere inquit ut praeceptum est, Caesar sciens quod si cessaveris, et tuas et palatii tui auferri iubebo prope diem annonas. hocque solo contumaciter dicto subiratus abscessit nec in conspectum eius postea venit saepius arcessitus.">Waiting times for cataract surgery
+		<div class="metadata" tooltip="Number of days from referral to procedure - 2015 or nearest year">Waiting times for cataract surgery
 		</div>
 		<span id="timecatasurg"></span>
 	</div>
 	<div class="compareChart" >
-		<div class="metadata" tooltip="Rogatus ad ultimum admissusque in consistorium ambage nulla praegressa inconsiderate et leviter proficiscere inquit ut praeceptum est, Caesar sciens quod si cessaveris, et tuas et palatii tui auferri iubebo prope diem annonas. hocque solo contumaciter dicto subiratus abscessit nec in conspectum eius postea venit saepius arcessitus.">Consultations skipped due to cost
+		<div class="metadata" tooltip="Age-sex standardised rate per 100 population - 2016 or nearest year">Consultations skipped due to cost
 		</div>
 		<span id="skippedcons"></span>
 	</div>
@@ -203,7 +205,7 @@ test="#"+topicSelected;
 		var minValue = d3.min(data, function(d) { return parseFloat(d.value); });
 		var maxValue = d3.max(data, function(d) { return parseFloat(d.value); });
 
-		if(topicSelected=="popcover" ||  topicSelected=="oopexp" ||  topicSelected=="timecatasurg" ||  topicSelected=="skippedcons" )
+		if(topicSelected=="popcover" )
 			x.domain([minValue,maxValue]) ;
 		else
 			x.domain([maxValue,minValue]) ;
@@ -242,7 +244,7 @@ test="#"+topicSelected;
 			})
 			.style("fill",function(d){
 				if(d.ISO==countrySel)
-					return "#5E0084"
+					return "#76A02D"
 				else if (d.Country=="OECD")
 					return "#0082B5"
 				else if (d.value==minValue )
@@ -258,10 +260,22 @@ test="#"+topicSelected;
 		circleGroup.append("text")
 			.attr("class","label")
 			.attr("dx", function(d){
-				    	if(d.value!=="")
-				    		return  x(parseFloat(d.value))-12;})
+				if(d.value!==""){
+					if(topicSelected=="popcover")
+				    		return  x(parseFloat(d.value))-12;
+					else
+							return  12 + x(parseFloat(d.value));
+				 }  	
+			})
 			.attr("dy",height/2)
-			.style("text-anchor","end")
+			.style("text-anchor",function(d){
+
+					if(topicSelected=="popcover")
+				    		return  "end";
+					else
+							return  "start";
+				  	
+			})
 			.text(function(d){
 				if((d.value==minValue  )&& (d.ISO!=countrySel))
 					return format(d.value) ;
@@ -270,10 +284,22 @@ test="#"+topicSelected;
 		circleGroup.append("text")
 			.attr("class","label")
 			.attr("dx", function(d){
-				    	if(d.value!=="")
-				    		return  12 + x(parseFloat(d.value));})
+				if(d.value!==""){
+					if(topicSelected=="popcover")
+				    		return  12 + x(parseFloat(d.value));
+					else
+							return  x(parseFloat(d.value))-12;
+				 }  	
+			})
 			.attr("dy",height/2)
-			.style("text-anchor","start")
+			.style("text-anchor",function(d){
+
+					if(topicSelected=="popcover")
+				    		return  "start";
+					else
+							return  "end";
+				  	
+			})
 			.text(function(d){
 				if(( d.value==maxValue )&& (d.ISO!=countrySel))
 					return format(d.value) ;
@@ -330,25 +356,25 @@ test="#"+topicSelected;
 		     d3.select("#indicTooltip")
 		        .text(function(){
 	            	if (topicSelected=="popcover")
-	            		return "Population coverage  (" + d.yearData +")";
+	            		return "Population coverage";
 	            	if (topicSelected=="oopexp")
-	            		return "Share of out of pocket expenditure (" + d.yearData  +")";
+	            		return "Share of out-of-pocket expenditure";
 	            	if (topicSelected=="timecatasurg")
-	            		return "Waiting time for cataract surgery (" + d.yearData  +")";
+	            		return "Waiting times for cataract surgery";
 	            	if (topicSelected=="skippedcons")
-	            		return "Consultations skipped due to cost  (" + d.yearData  +")";
+	            		return "Consultations skipped due to cost";
 	            });
 
 		     d3.select("#valueTooltip")
 		        .text(function(){
 	            	if (topicSelected=="popcover")
-	            		return format(d.value) + " % of population covered by insurance";
+	            		return format(d.value) + " % of population covered by insurance for a core set of services";
 	            	if (topicSelected=="oopexp")
-	            		return format(d.value) + " % of final household consumption";
+	            		return format(d.value) + " % of medical expenses on final household consumption ";
 	            	if (topicSelected=="timecatasurg")
-	            		return format(d.value) + " Number of days";
+	            		return format(d.value) + " Number of days from referral to procedure";
 	            	if (topicSelected=="skippedcons")
-	            		return format(d.value) + " per 100";
+	            		return format(d.value) + " Age-sex standardised rate per 100 population";
         	});
 
 

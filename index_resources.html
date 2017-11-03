@@ -16,10 +16,12 @@
 <div class="button  active" id="resources">Health care resources </div>
 </div>
 <Br/>
-<div class="topicExplanation">Rogatus ad ultimum admissusque in consistorium ambage nulla praegressa inconsiderate et leviter proficiscere inquit ut praeceptum est, Caesar sciens quod si cessaveris, et tuas et palatii tui auferri iubebo prope diem annonas. hocque solo contumaciter dicto subiratus abscessit nec in conspectum eius postea venit saepius arcessitus.</div>
+<div class="topicExplanation">Having sufficient health care resources is critical to the functioning of health systems. But higher resources do not automatically translate into better health outcomes – the effectiveness of spending is also important. Health care expenditure per capita is the most immediate summary measure of health care resources. The supply of health workers (doctors and nurses) and hospital beds are also reported, since higher health spending is not always closely related to these indicators.<br/>All data refer to 2015 or nearest year, except for health care expenditure, which refers to 2016.
+</div>
 <Br/>
 <div class="selector">Highlight a country: 
 <select id="dropDownButton" onchange="highlightCountry(this.value)";>
+	 <option value="-">-</option>
 	 <option value="AUS" selected="selected">Australia</option>
 	 <option value="AUT" >Austria</option>
 	 <option value="BEL" >Belgium</option>
@@ -70,22 +72,22 @@
 <br/>
 <div class="sector" id="CareResources">
 	<div class="compareChart">
-		<div class="metadata" tooltip="Rogatus ad ultimum admissusque in consistorium ambage nulla praegressa inconsiderate et leviter proficiscere inquit ut praeceptum est, Caesar sciens quod si cessaveris, et tuas et palatii tui auferri iubebo prope diem annonas. hocque solo contumaciter dicto subiratus abscessit nec in conspectum eius postea venit saepius arcessitus.">Health care expenditure
+		<div class="metadata" tooltip="Total current expenditure per capita, USD PPP - 2016 or nearest year">Health care expenditure
 		</div>
 		<span id="healthexp"></span>
 	</div>
 	<div class="compareChart" >
-		<div class="metadata" tooltip="Rogatus ad ultimum admissusque in consistorium ambage nulla praegressa inconsiderate et leviter proficiscere inquit ut praeceptum est, Caesar sciens quod si cessaveris, et tuas et palatii tui auferri iubebo prope diem annonas. hocque solo contumaciter dicto subiratus abscessit nec in conspectum eius postea venit saepius arcessitus.">Doctors per capita
+		<div class="metadata" tooltip="Number of practising physicians per 1 000 population - 2015 or nearest year">Doctors per capita
 		</div>
 		<span id="doccap"></span>
 	</div>
 	<div class="compareChart" >
-		<div class="metadata" tooltip="Rogatus ad ultimum admissusque in consistorium ambage nulla praegressa inconsiderate et leviter proficiscere inquit ut praeceptum est, Caesar sciens quod si cessaveris, et tuas et palatii tui auferri iubebo prope diem annonas. hocque solo contumaciter dicto subiratus abscessit nec in conspectum eius postea venit saepius arcessitus.">Nurses per capita
+		<div class="metadata" tooltip="Number of practising nurses per 1 000 population - 2015 or nearest year">Nurses per capita
 		</div>
 		<span id="nursecap"></span>
 	</div>
 	<div class="compareChart" >
-		<div class="metadata" tooltip="Rogatus ad ultimum admissusque in consistorium ambage nulla praegressa inconsiderate et leviter proficiscere inquit ut praeceptum est, Caesar sciens quod si cessaveris, et tuas et palatii tui auferri iubebo prope diem annonas. hocque solo contumaciter dicto subiratus abscessit nec in conspectum eius postea venit saepius arcessitus.">Beds per capita
+		<div class="metadata" tooltip="Number of beds per 1 000 population - 2015 or nearest year">Beds per capita
 		</div>
 		<span id="bedcap"></span>
 	</div>
@@ -157,14 +159,14 @@ legend.append("text")
 .attr("y",height/2.5)
 .attr("class","legend")
 .attr("text-anchor","middle")
-.text("Top Performer")
+.text("Highest")
 
 legend.append("text")
 .attr("x",marginLeft)
 .attr("y",height/2.5)
 .attr("class","legend")
 .attr("text-anchor","middle")
-.text("Bottom Performer");
+.text("Lowest");
 
 function createComparison(topicSelected,countrySel){
 test="#"+topicSelected;
@@ -242,7 +244,7 @@ test="#"+topicSelected;
 			})
 			.style("fill",function(d){
 				if(d.ISO==countrySel)
-					return "#5E0084"
+					return "#76A02D"
 				else if (d.Country=="OECD")
 					return "#0082B5"
 				else if (d.value==minValue )
@@ -258,10 +260,22 @@ test="#"+topicSelected;
 		circleGroup.append("text")
 			.attr("class","label")
 			.attr("dx", function(d){
-				    	if(d.value!=="")
-				    		return  x(parseFloat(d.value))-12;})
+				if(d.value!==""){
+					if(topicSelected=="healthexp" ||  topicSelected=="doccap" ||  topicSelected=="nursecap" ||  topicSelected=="bedcap" )
+				    		return  x(parseFloat(d.value))-12;
+					else
+							return  12 + x(parseFloat(d.value));
+				 }  	
+			})
 			.attr("dy",height/2)
-			.style("text-anchor","end")
+			.style("text-anchor",function(d){
+
+					if(topicSelected=="healthexp" ||  topicSelected=="doccap" ||  topicSelected=="nursecap" ||  topicSelected=="bedcap" )
+				    		return  "end";
+					else
+							return  "start";
+				  	
+			})
 			.text(function(d){
 				if((d.value==minValue  )&& (d.ISO!=countrySel))
 					return format(d.value) ;
@@ -270,10 +284,22 @@ test="#"+topicSelected;
 		circleGroup.append("text")
 			.attr("class","label")
 			.attr("dx", function(d){
-				    	if(d.value!=="")
-				    		return  12 + x(parseFloat(d.value));})
+				if(d.value!==""){
+					if(topicSelected=="healthexp" ||  topicSelected=="doccap" ||  topicSelected=="nursecap" ||  topicSelected=="bedcap" )
+				    		return  12 + x(parseFloat(d.value));
+					else
+							return  x(parseFloat(d.value))-12;
+				 }  	
+			})
 			.attr("dy",height/2)
-			.style("text-anchor","start")
+			.style("text-anchor",function(d){
+
+					if(topicSelected=="healthexp" ||  topicSelected=="doccap" ||  topicSelected=="nursecap" ||  topicSelected=="bedcap" )
+				    		return  "start";
+					else
+							return  "end";
+				  	
+			})
 			.text(function(d){
 				if(( d.value==maxValue )&& (d.ISO!=countrySel))
 					return format(d.value) ;
@@ -328,25 +354,25 @@ test="#"+topicSelected;
 		     d3.select("#indicTooltip")
 		        .text(function(){
 	            	if (topicSelected=="healthexp")
-	            		return "Health care expenditure    (" + d.yearData +")";
+	            		return "Health care expenditure";
 	            	if (topicSelected=="doccap")
-	            		return "Doctors per capita (" + d.yearData  +")";
+	            		return "Doctors per capita";
 	            	if (topicSelected=="nursecap")
-	            		return "nurses per capita (" + d.yearData  +")";
+	            		return "nurses per capita";
 	            	if (topicSelected=="bedcap")
-	            		return "Beds per capita (" + d.yearData  +")";
+	            		return "Beds per capita";
 	            });
 
 		     d3.select("#valueTooltip")
 		        .text(function(){
 	            	if (topicSelected=="healthexp")
-	            		return format(d.value) + " Total spending per capita, USD/PPP";
+	            		return format(d.value) + " Total current expenditure per capita, USD PPP";
 	            	if (topicSelected=="doccap")
-	            		return format(d.value) + " Practicing physicians per 1 000";
+	            		return format(d.value) + " Number of practising physicians per 1 000 population";
 	            	if (topicSelected=="nursecap")
-	            		return format(d.value) + " Practicing nurses per 1 000";
+	            		return format(d.value) + " Number of practising nurses per 1 000 population";
 	            	if (topicSelected=="bedcap")
-	            		return format(d.value) + " Beds per 1 000 population";
+	            		return format(d.value) + " Number of beds per 1 000 population";
 	            });
 			        
 
