@@ -4,7 +4,7 @@ document.write("            <div id=\"closeShare\" class=\"sharebutton closeButt
 document.write("            <div class=\"aboutItem generalText\"><b>This visualisation<\/b> is a service provided by the OECD. You are invited to share this tool or to embed it into your website. <a href=\"http:\/\/www.oecd.org\/termsandconditions\" target=\"_blank\">OECD Terms and Conditions<\/a> apply.<\/div>");
 document.write("            <div class=\"shareList\">");
 document.write("                <div class=\"shareItem\" id=\"shareEmail\">");
-document.write("                    <a href=\"mailto:?subject=Health at a glance&amp;body=Check out this visualisation http:\/\/gitvfd.github.io\/Health_At_a_Glance \" title=\"Share by Email\">");
+document.write("                    <a href=\"mailto:?subject=OECD Health at a glance 2018&amp;body=Check out this visualisation http:\/\/www.oecd.org\/health\/health-systems\/health-at-a-glance-19991312.htm \" title=\"Share by Email\">");
 document.write("                        <img id=\"email\" src=\"\">");
 document.write("                        <div>E-mail<\/div>");
 document.write("                    <\/a>");
@@ -21,7 +21,7 @@ document.write("                        <div>Facebook<\/div>");
 document.write("                    <\/a>");
 document.write("                <\/div>");
 document.write("                <div class=\"shareItem\" id=\"shareTwitter\">");
-document.write("                    <a href=\"https:\/\/twitter.com\/intent\/tweet?text=Data+viz+by+%40OECD%0Ahttp%3A%2F%2Fhttp:\/\/gitvfd.github.io\/Health_At_a_Glance\" target=\"_blank\">");
+document.write("                    <a href=\"https:\/\/twitter.com\/intent\/tweet?text=Visualisation+by+%40OECD_social%0Ahttp%3A%2F%2Fwww.oecd.org%2Fhealth%2Fhealth-systems%2Fhealth-at-a-glance-19991312.htm target=\"_blank\">");
 document.write("                        <img id=\"twitter\" src=\"\/\/www.compareyourcountry.org\/02resources\/img\/share\/twitter.png\">");
 document.write("                        <div>Tweet<\/div>");
 document.write("                    <\/a>");

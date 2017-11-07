@@ -82,7 +82,7 @@
 		<span id="alcohol"></span>
 	</div>
 	<div class="compareChart" >
-		<div class="% of population (15 years+) with BMI>30 - 2015 or nearest year">Obesity
+		<div class="metadata"  tooltip="% of population (15 years+) with BMI>30 - 2015 or nearest year">Obesity
 		</div>
 		<span id="obesity"></span>
 	</div>
@@ -94,7 +94,7 @@
 </div>
 
 <Br/>
-<div id="source">For further details on definitions and sources <a href="http://dx.doi.org/10.1787/health_glance-2017-en" target="_blank">Health at a Glance 2017</a>.</div>
+<div id="source">Visit the <a href="http://www.oecd.org/health/health-systems/health-at-a-glance-19991312.htm" target="_blank">Health at a Glance 2017 website</a> for access to the full report, detailed country notes and more information.</div>
 <!--<div id="source">Download the data <a href="http://www.oecd.org/">here</a>.</div>-->	
 <Br/>
 <div id="footer">The statistical data for Israel are supplied by and under the responsibility of the relevant Israeli authorities. The use of such data by the OECD is without prejudice to the status of the Golan Heights, East Jerusalem and Israeli settlements in the West Bank under the terms of international law.
@@ -369,7 +369,7 @@ test="#"+topicSelected;
 	            });
 
 		     d3.select("#valueTooltip")
-		        .text(function(){
+		        .html(function(){
 			        if (topicSelected=="smoking" )
 		              return  format(d.value) + " % of population (15 years+) who smokes daily";
 		            else if((topicSelected=="obesity" ) )
