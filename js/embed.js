@@ -4,7 +4,7 @@ document.write("            <div id=\"closeShare\" class=\"sharebutton closeButt
 document.write("            <div class=\"aboutItem generalText\"><b>This visualisation<\/b> is a service provided by the OECD. You are invited to share this tool or to embed it into your website. <a href=\"http:\/\/www.oecd.org\/termsandconditions\" target=\"_blank\">OECD Terms and Conditions<\/a> apply.<\/div>");
 document.write("            <div class=\"shareList\">");
 document.write("                <div class=\"shareItem\" id=\"shareEmail\">");
-document.write("                    <a href=\"mailto:?subject=OECD Health at a glance 2018&amp;body=Check out this visualisation http:\/\/www.oecd.org\/health\/health-systems\/health-at-a-glance-19991312.htm \" title=\"Share by Email\">");
+document.write("                    <a href=\"mailto:?subject=OECD Health at a glance 2017&amp;body=Check out this visualisation http:\/\/www.oecd.org\/health\/health-systems\/health-at-a-glance-19991312.htm \" title=\"Share by Email\">");
 document.write("                        <img id=\"email\" src=\"\">");
 document.write("                        <div>E-mail<\/div>");
 document.write("                    <\/a>");
