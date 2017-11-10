@@ -21,7 +21,7 @@ document.write("                        <div>Facebook<\/div>");
 document.write("                    <\/a>");
 document.write("                <\/div>");
 document.write("                <div class=\"shareItem\" id=\"shareTwitter\">");
-document.write("                    <a href=\"https:\/\/twitter.com\/intent\/tweet?text=Visualisation+by+%40OECD_social%0Ahttp%3A%2F%2Fwww.oecd.org%2Fhealth%2Fhealth-systems%2Fhealth-at-a-glance-19991312.htm target=\"_blank\">");
+document.write("                    <a href=\"https:\/\/twitter.com\/intent\/tweet?text=Visualisation+by+%40OECD_social%0Ahttp%3A%2F%2Fwww.oecd.org%2Fhealth%2Fhealth-systems%2Fhealth-at-a-glance-19991312.htm>");
 document.write("                        <img id=\"twitter\" src=\"\/\/www.compareyourcountry.org\/02resources\/img\/share\/twitter.png\">");
 document.write("                        <div>Tweet<\/div>");
 document.write("                    <\/a>");
