@@ -320,7 +320,7 @@ test="#"+topicSelected;
 					return height/2-12;
 			})
 			.style("text-anchor","middle")
-			.text(function(d){
+			.html(function(d){
 				if(d.ISO==countrySel || d.ISO=="OECD"){ 
 	            //if(d.value!=minValue && d.value!=maxValue ){
 
@@ -330,7 +330,7 @@ test="#"+topicSelected;
 		            else if((topicSelected=="alcohol" ) )
 						return d.Country+ " (" + format(d.value) + " liter"+")";
 		            else if((topicSelected=="airpol" ))
-						return d.Country+ " (" + format(d.value) + " mg/m3"+")";
+						return d.Country+ " (" + format(d.value) + " µg/m3"+")";
 		            else
 		              return  "";
 	          	}
